@@ -131,5 +131,8 @@ public sealed class BenchmarkCommand : Command<BenchmarkSettings>
         return device.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
     }
 
-    private static List<IBenchmarkSuite> CreateSuites() => [];
+    private static List<IBenchmarkSuite> CreateSuites() =>
+    [
+        new ComputeThroughput(),
+    ];
 }
