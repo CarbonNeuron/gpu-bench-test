@@ -94,10 +94,10 @@ To publish a self-contained single-file binary:
 
 ```bash
 # Linux
-dotnet publish GpuBench/GpuBench.csproj -c Release -r linux-x64 --self-contained -p:PublishSingleFile=true -p:PublishTrimmed=true -o ./publish
+dotnet publish GpuBench/GpuBench.csproj -c Release -r linux-x64 --self-contained -p:PublishSingleFile=true -o ./publish
 
 # Windows
-dotnet publish GpuBench/GpuBench.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:PublishTrimmed=true -o ./publish
+dotnet publish GpuBench/GpuBench.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -o ./publish
 ```
 
 ## Download
