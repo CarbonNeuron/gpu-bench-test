@@ -1,5 +1,6 @@
 using GpuBench.Benchmarks;
 using GpuBench.Models;
+using GpuBench.Rendering;
 using ILGPU;
 using ILGPU.Runtime;
 using Spectre.Console;
@@ -114,8 +115,38 @@ public sealed class BenchmarkCommand : Command<BenchmarkSettings>
             AnsiConsole.WriteLine();
         }
 
-        // TODO: Render summary table
-        // TODO: Export results
+        // Render overall summary and champion panels
+        if (allResults.Count > 0)
+        {
+            ResultsRenderer.RenderSummaryTable(allResults, profiles);
+            ResultsRenderer.RenderOverallChampion(allResults, profiles);
+        }
+
+        // Export results if requested
+        if (options.ExportPath is { } exportPath && allResults.Count > 0)
+        {
+            try
+            {
+                if (exportPath.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+                {
+                    ExportWriter.ExportJson(exportPath, allResults, profiles);
+                    AnsiConsole.MarkupLine($"[green]Results exported to {Markup.Escape(exportPath)}[/]");
+                }
+                else if (exportPath.EndsWith(".md", StringComparison.OrdinalIgnoreCase))
+                {
+                    ExportWriter.ExportMarkdown(exportPath, allResults, profiles);
+                    AnsiConsole.MarkupLine($"[green]Results exported to {Markup.Escape(exportPath)}[/]");
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine($"[yellow]Unsupported export format. Use .json or .md extension.[/]");
+                }
+            }
+            catch (Exception ex)
+            {
+                AnsiConsole.MarkupLine($"[red]Export failed: {Markup.Escape(ex.Message)}[/]");
+            }
+        }
 
         foreach (var a in accelerators) a.Dispose();
         return 0;
