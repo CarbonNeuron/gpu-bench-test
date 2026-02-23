@@ -46,7 +46,10 @@ public sealed class BenchmarkCommand : Command<BenchmarkSettings>
     {
         var options = BenchmarkOptions.FromSettings(settings);
 
-        AnsiConsole.Write(new Rule("[bold blue]GpuBench v1.0[/]").RuleStyle("blue"));
+        AnsiConsole.Write(new Panel("[bold blue]GpuBench v1.0[/]\n[dim]GPU/CPU Compute Benchmark Suite[/]")
+            .Border(BoxBorder.Double)
+            .BorderColor(Color.Blue)
+            .Padding(2, 1));
         AnsiConsole.WriteLine();
 
         using var ilContext = Context.Create(builder =>
@@ -165,8 +168,8 @@ public sealed class BenchmarkCommand : Command<BenchmarkSettings>
     private static List<IBenchmarkSuite> CreateSuites() =>
     [
         new ComputeThroughput(),
-        new MemoryBandwidth(),
         new MatrixMultiply(),
+        new MemoryBandwidth(),
         new LatencyTests(),
         new MemoryPatterns(),
     ];
