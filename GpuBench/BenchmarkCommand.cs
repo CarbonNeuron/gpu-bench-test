@@ -136,5 +136,6 @@ public sealed class BenchmarkCommand : Command<BenchmarkSettings>
         new ComputeThroughput(),
         new MemoryBandwidth(),
         new MatrixMultiply(),
+        new LatencyTests(),
     ];
 }
