@@ -134,6 +134,7 @@ public sealed class BenchmarkCommand : Command<BenchmarkSettings>
     private static List<IBenchmarkSuite> CreateSuites() =>
     [
         new ComputeThroughput(),
+        new MemoryBandwidth(),
         new MatrixMultiply(),
     ];
 }
